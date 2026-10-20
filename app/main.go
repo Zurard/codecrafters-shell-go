@@ -44,6 +44,8 @@ func read() {
 }
 
 func main() {
-	read()
-	
+	// keep taking commands until and unless we exit the loop 
+	for true {
+		read()
+	}	
 }
