@@ -12,7 +12,12 @@ import (
 var _ = fmt.Print
 
 // this are the lest of commands we can execute in our code 
-var commands = make(map[string] struct{})
+var commands = map[string] struct{}{
+	"exit" : struct{}{},
+}
+
+
+var toExit = false
 
 func parse(cmd string) (string,error) {
 	_, found := commands[cmd]
@@ -30,22 +35,26 @@ func read() {
 	fmt.Print("$ ")
 	text,_ := reader.ReadString('\n')
 	text = strings.TrimSpace(text)
+	
 	for text == "" {
 		fmt.Print("$ ")
 		text,_ = reader.ReadString('\n')
 		text = strings.TrimSpace(text)
 	}  
-	_, err := parse(text)
+	cmd , err := parse(text)
 	// so basically if error is not null 
 	if err != nil {
 		// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found 
 		fmt.Print(err)
 	}
+	execute(cmd)
+
 }
 
 func main() {
 	// keep taking commands until and unless we exit the loop 
 	for true {
 		read()
+		if toExit == true {return}
 	}	
 }
