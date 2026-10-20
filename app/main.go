@@ -19,7 +19,7 @@ func parse(cmd string) (string,error) {
 	// fmt.Println(found)
 	if !found {
 		err := cmd + " " + "command not found"  
-		return "",errors.New(err + "\n")
+		return "",errors.New(err)
 	}
 	return cmd , nil 
 }
@@ -33,7 +33,7 @@ func read() {
 	// so basically if error is not null 
 	if err != nil {
 		// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found 
-		fmt.Println(err)
+		fmt.Print(err + " ")
 	}
 }
 
