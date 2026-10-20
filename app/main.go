@@ -29,13 +29,12 @@ func read() {
 	fmt.Print("$")
 	text,_ := reader.ReadString('\n')
 	text = strings.TrimSpace(text) 
-	command , err := parse(text)
+	_, err := parse(text)
 	// so basically if error is not null 
 	if err != nil {
 		// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found 
 		fmt.Println(err)
 	}
-	fmt.Println(command)
 }
 
 func main() {
