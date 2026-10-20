@@ -11,14 +11,6 @@ import (
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
 var _ = fmt.Print
 
-// this are the lest of commands we can execute in our code 
-var commands = map[string] struct{}{
-	"exit" : struct{}{},
-}
-
-
-var toExit = false
-
 func parse(cmd string) (string,error) {
 	_, found := commands[cmd]
 	// fmt.Println(found)
