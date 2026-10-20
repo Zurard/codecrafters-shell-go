@@ -27,12 +27,14 @@ func parse(cmd string) (string,error) {
 func read() {
 	// reader object
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("$")
+	fmt.Print("$ ")
 	text,_ := reader.ReadString('\n')
-	for text == " " {
+	text = strings.TrimSpace(text)
+	for text == "" {
+		fmt.Print("$ ")
 		text,_ = reader.ReadString('\n')
-	} 
-	text = strings.TrimSpace(text) 
+		text = strings.TrimSpace(text)
+	}  
 	_, err := parse(text)
 	// so basically if error is not null 
 	if err != nil {
