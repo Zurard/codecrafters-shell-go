@@ -4,22 +4,8 @@ package main
 import (
 	"bufio" 
 	"strings"
-	"errors"
 	"os"
 	"fmt")
-
-// Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
-var _ = fmt.Print
-
-func parse(cmd string) (string,error) {
-	_, found := commands[cmd]
-	// fmt.Println(found)
-	if !found {
-		err := cmd + ": " + "command not found"  
-		return "",errors.New(err + "\n" )
-	}
-	return cmd , nil 
-}
 
 func read() {
 	// reader object
@@ -33,13 +19,27 @@ func read() {
 		text,_ = reader.ReadString('\n')
 		text = strings.TrimSpace(text)
 	}  
-	cmd , err := parse(text)
+	
+	// PARSE THE TEXT ENTERED 
+	// need to extract the command and its arguments 
+	text_arr := strings.Fields(text)
+
+	cmd := text_arr[0]
+	args := text_arr[1:]
+
+	_, ifExist := commands[cmd]
+
+	var err error = nil
+
+	if !ifExist {
+		err = fmt.Errorf("%s: command not found\n", cmd)
+	}
 	// so basically if error is not null 
 	if err != nil {
 		// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found 
 		fmt.Print(err)
 	}
-	execute(cmd)
+	execute(cmd , args )
 
 }
 
