@@ -19,7 +19,7 @@ func parse(cmd string) (string,error) {
 	// fmt.Println(found)
 	if !found {
 		err := cmd + " " + "command not found"  
-		return "",errors.New(err)
+		return "",errors.New(err + "\n")
 	}
 	return cmd , nil 
 }
