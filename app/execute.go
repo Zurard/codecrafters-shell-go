@@ -71,5 +71,6 @@ func runProgram(cmd string , args []string ) {
 		log.Fatal(err)
 	}
 	fmt.Println(out.String())
+	read()
 }	
  
