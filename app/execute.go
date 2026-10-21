@@ -70,7 +70,7 @@ func runProgram(cmd string, args []string) {
 		output.Run()
 	} else {
 		// fmt.Println(len(cmd))
-		fmt.Println(cmd,": command not found")
+		fmt.Println(": command not found")
 	}
 
 }
