@@ -32,7 +32,7 @@ func IsValidCommmand(args []string) {
 	cmd := strings.Join(args," ")
 	_ , found := commands[cmd] 
 	if found { 
-		fmt.Println(cmd + " is a shell built in")
+		fmt.Println(cmd + " is a shell builtin")
 		} else {
 		fmt.Println( errors.New(cmd + ": not found"))
 	}
