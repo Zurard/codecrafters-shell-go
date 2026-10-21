@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strings"
 	"os/exec"
+	"strings"
 )
 
 func execute(cmd string, args []string) {
@@ -20,10 +20,10 @@ func execute(cmd string, args []string) {
 	case "type":
 		execType(args)
 
-	default : 
-		runProgram(cmd , args)
+	default:
+		runProgram(cmd, args)
 	}
-	
+
 }
 
 func exit() {
@@ -45,28 +45,31 @@ func execType(args []string) {
 	if found {
 		fmt.Println(output + " is a shell builtin")
 	} else if IsCurrPath {
-		path , err := exec.LookPath(output)	
-		if err != nil{
-			fmt.Println(errors.New(output + ": not found"))	
-		}else {
+		path, err := exec.LookPath(output)
+		if err != nil {
+			fmt.Println(errors.New(output + ": not found"))
+		} else {
 			fmt.Println(output + " is " + path)
 		}
-		
-	} 
+
+	}
 }
 
-func runProgram(cmd string , args []string ) { 
+func runProgram(cmd string, args []string) {
 	// fmt.Println("curr path is :", currPath )
 	// fmt.Println("program which needs to be executed" ,cmd )
 	// fmt.Println("arguments are : ", strings.Join(args, " "))
 
 	// path , err := exec.LookPath(cmd)
 	// fmt.Println("path is : " , path , "error is :" , err )
-	
-	output := exec.Command(cmd , args[0:]... )
-	output.Stdout = os.Stdout
-	output.Stderr = os.Stderr
-	output.Run()
+	_, err := exec.LookPath(cmd)
+	if err == nil {
+		output := exec.Command(cmd, args[0:]...)
+		output.Stdout = os.Stdout
+		output.Stderr = os.Stderr
+		output.Run()
+	} else {
+		fmt.Println(cmd, ": invalid command ")
+	}
 
-}	
- 
+}
