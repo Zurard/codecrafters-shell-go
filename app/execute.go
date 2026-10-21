@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 	"os/exec"
 )
@@ -18,7 +19,11 @@ func execute(cmd string, args []string) {
 
 	case "type":
 		execType(args)
+
+	default : 
+		runProgram(cmd , args)
 	}
+	
 }
 
 func exit() {
@@ -40,13 +45,7 @@ func execType(args []string) {
 	if found {
 		fmt.Println(output + " is a shell builtin")
 	} else if IsCurrPath {
-		// pathFound, ifExist := lookPath(output)
-		// if ifExist {
-		// 	fmt.Println(output + " is in " + pathFound)
-		// } else {
-		// 	fmt.Println(errors.New(output + ": not found"))	
-		// }
-		path , err := exec.LookPath(output)
+		path , err := exec.LookPath(output)	
 		if err != nil{
 			fmt.Println(errors.New(output + ": not found"))	
 		}else {
@@ -56,17 +55,21 @@ func execType(args []string) {
 	} 
 }
 
-func lookPath(args string) (string, bool) {
-	// ifExist := false
-	paths := strings.Split(currPath, ":")
-	for _, path := range paths {
-		// fmt.Println(args)
-		// fmt.Println(path)
-		// fmt.Println(strings.Contains(path,args))
-		if strings.Contains(path,args) {
-			// fmt.Println(path)
-			return path , true 
-		}
+func runProgram(cmd string , args []string ) { 
+	// fmt.Println("curr path is :", currPath )
+	// fmt.Println("program which needs to be executed" ,cmd )
+	// fmt.Println("arguments are : ", strings.Join(args, " "))
+
+	// path , err := exec.LookPath(cmd)
+	// fmt.Println("path is : " , path , "error is :" , err )
+	
+	output := exec.Command(cmd , strings.Join(args, " "))
+	var out strings.Builder
+	output.Stdout = &out
+	err := output.Run()
+	if err != nil {
+		log.Fatal(err)
 	}
-	return "", false 
-}
+	fmt.Println(out.String())
+}	
+ 

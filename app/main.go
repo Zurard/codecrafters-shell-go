@@ -36,18 +36,18 @@ func read() {
 	cmd := text_arr[0]
 	args := text_arr[1:]
 
-	_, ifExist := commands[cmd]
+	// _, ifExist := commands[cmd]
 
-	var err error = nil
+	// var err error = nil
 
-	if !ifExist {
-		err = fmt.Errorf("%s: command not found\n", cmd)
-	}
-	// so basically if error is not null
-	if err != nil {
-		// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found
-		fmt.Print(err)
-	}
+	// if !ifExist {
+	// 	err = fmt.Errorf("%s: command not found\n", cmd)
+	// }
+	// // so basically if error is not null
+	// if err != nil {
+	// 	// here we will get the error created in parse function as in stage 3 : err is {cmd} command not found
+	// 	fmt.Print(err)
+	// }
 	execute(cmd, args)
 
 }
