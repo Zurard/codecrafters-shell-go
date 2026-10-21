@@ -63,7 +63,7 @@ func runProgram(cmd string , args []string ) {
 	// path , err := exec.LookPath(cmd)
 	// fmt.Println("path is : " , path , "error is :" , err )
 	
-	output := exec.Command(cmd , strings.Join(args, " "))
+	output := exec.Command(cmd ,  cmd + " " +  strings.Join(args, " "))
 	var out strings.Builder
 	output.Stdout = &out
 	err := output.Run()
