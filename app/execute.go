@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"log"
+	"os"
 	"strings"
 	"os/exec"
 )
@@ -64,13 +64,9 @@ func runProgram(cmd string , args []string ) {
 	// fmt.Println("path is : " , path , "error is :" , err )
 	
 	output := exec.Command(cmd , args[0:]... )
-	var out strings.Builder
-	output.Stdout = &out
-	err := output.Run()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(out.String())
-	read()
+	output.Stdout = os.Stdout
+	output.Stderr = os.Stderr
+	output.Run()
+
 }	
  
