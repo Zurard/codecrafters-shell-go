@@ -1,42 +1,72 @@
-package main 
+package main
 
 import (
-	"fmt"
-	"strings"	
 	"errors"
+	"fmt"
+	"strings"
+	"os/exec"
 )
 
-
-func execute(cmd string , args []string) { 
+func execute(cmd string, args []string) {
 	switch cmd {
-	// exit command stops the shell from taking more prompts  
-	case "exit" : exit()
+	// exit command stops the shell from taking more prompts
+	case "exit":
+		exit()
 
-	case "echo" : echo(args)
+	case "echo":
+		echo(args)
 
-	case "type" : IsValidCommmand(args) 
-}
-
-} 
-
-func exit() { 	
-	toExit = true  
-}
-
-func echo(args []string){
-	output := strings.Join(args," ")
-	fmt.Println(output)
-}
-
-func IsValidCommmand(args []string) {
-	cmd := strings.Join(args," ")
-	_ , found := commands[cmd] 
-	if found { 
-		fmt.Println(cmd + " is a shell builtin")
-		} else {
-		fmt.Println( errors.New(cmd + ": not found"))
+	case "type":
+		execType(args)
 	}
 }
 
+func exit() {
+	toExit = true
+}
 
+func echo(args []string) {
+	output := strings.Join(args, " ")
+	fmt.Println(output)
+}
 
+func execType(args []string) {
+	output := strings.Join(args, " ")
+	_, found := commands[output]
+
+	// the path would look something like this :
+	// /usr/bin:/usr/local/bin:/home/shree/.local/bin:/home/shree/.bun/bin:/home/shree/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/shree/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/home/shree/.local/bin:/home/shree/.local/bin:/home/shree/.bun/bin:/home/shree/.nvm/versions/node/v24.11.1/bin:/home/shree/.local/share/pnpm:/home/shree/.cargo/bin:/home/shree/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/shree/ida-free-pc-9.2:/home/shree/ida-free-pc-9.2
+
+	if found {
+		fmt.Println(output + " is a shell builtin")
+	} else if IsCurrPath {
+		// pathFound, ifExist := lookPath(output)
+		// if ifExist {
+		// 	fmt.Println(output + " is in " + pathFound)
+		// } else {
+		// 	fmt.Println(errors.New(output + ": not found"))	
+		// }
+		path , err := exec.LookPath(output)
+		if err != nil{
+			fmt.Println(errors.New(output + ": not found"))	
+		}else {
+			fmt.Println(output + " is in " + path)
+		}
+		
+	} 
+}
+
+func lookPath(args string) (string, bool) {
+	// ifExist := false
+	paths := strings.Split(currPath, ":")
+	for _, path := range paths {
+		// fmt.Println(args)
+		// fmt.Println(path)
+		// fmt.Println(strings.Contains(path,args))
+		if strings.Contains(path,args) {
+			// fmt.Println(path)
+			return path , true 
+		}
+	}
+	return "", false 
+}
