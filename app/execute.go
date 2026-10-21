@@ -50,7 +50,7 @@ func execType(args []string) {
 		if err != nil{
 			fmt.Println(errors.New(output + ": not found"))	
 		}else {
-			fmt.Println(output + " is in " + path)
+			fmt.Println(output + " is " + path)
 		}
 		
 	} 
