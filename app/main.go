@@ -34,6 +34,7 @@ func read() {
 	text_arr := strings.Fields(text)
 
 	cmd := text_arr[0]
+	cmd = strings.TrimSpace(cmd)
 	args := text_arr[1:]
 
 	// _, ifExist := commands[cmd]
