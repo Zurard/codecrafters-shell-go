@@ -69,7 +69,7 @@ func runProgram(cmd string, args []string) {
 		output.Stderr = os.Stderr
 		output.Run()
 	} else {
-		fmt.Println(cmd, ": invalid command ")
+		fmt.Println(cmd, ": command not found ")
 	}
 
 }
