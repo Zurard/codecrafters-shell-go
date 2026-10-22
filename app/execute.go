@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var processNo = 1  
+
 func exit() {
 	toExit = true
 }
@@ -53,5 +55,27 @@ func runProgram(cmd string, args []string) {
 
 
 func runJobs(cmd string , args []string) { 
-	fmt.Print("")
+	// now i need to spawn a child process which run in the backgrond and we keep taking input 
+	// fmt.Println(cmd ,": needs to be exexuted ")
+	// fmt.Println("args are :" , strings.Join(args," "))
+
+	// first we need to check if a valid command or not 
+	_ , err := exec.LookPath(cmd)
+	if err != nil {
+		fmt.Println(cmd + ": not found")
+	}else {
+		output := exec.Command(cmd, args[0:]...)
+		if err := output.Start() ; err != nil {
+			fmt.Println("failed to start the process..")
+		}
+		processNo += 1
+		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
+		pid := output.Process.Pid
+		fmt.Printf("[%d] %s\n", processNo, pid)
+		if err := output.Wait(); err != nil {
+			processNo -= 1 
+	}
+	}
+
+
 }
