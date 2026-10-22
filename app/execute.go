@@ -71,7 +71,7 @@ func runJobs(cmd string , args []string) {
 		processNo += 1
 		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
 		pid := output.Process.Pid
-		fmt.Printf("[%d] %s\n", processNo, pid)
+		fmt.Printf("[%d] %v\n", processNo, pid)
 		if err := output.Wait(); err != nil {
 			processNo -= 1 
 	}
