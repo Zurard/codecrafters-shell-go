@@ -8,24 +8,6 @@ import (
 	"strings"
 )
 
-func execute(cmd string, args []string) {
-	switch cmd {
-	// exit command stops the shell from taking more prompts
-	case "exit":
-		exit()
-
-	case "echo":
-		echo(args)
-
-	case "type":
-		execType(args)
-
-	default:
-		runProgram(cmd, args)
-	}
-
-}
-
 func exit() {
 	toExit = true
 }
@@ -56,12 +38,6 @@ func execType(args []string) {
 }
 
 func runProgram(cmd string, args []string) {
-	// fmt.Println("curr path is :", currPath )
-	// fmt.Println("program which needs to be executed" ,cmd )
-	// fmt.Println("arguments are : ", strings.Join(args, " "))
-
-	// path , err := exec.LookPath(cmd)
-	// fmt.Println("path is : " , path , "error is :" , err )
 	_, err := exec.LookPath(cmd)
 	if err == nil {
 		output := exec.Command(cmd, args[0:]...)
@@ -73,4 +49,9 @@ func runProgram(cmd string, args []string) {
 		fmt.Println(cmd + ": command not found")
 	}
 
+}
+
+
+func runJobs(cmd string , args []string) { 
+	fmt.Print("")
 }
