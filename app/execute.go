@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var processNo = 1  
+var processNo = 0  
 
 func exit() {
 	toExit = true
