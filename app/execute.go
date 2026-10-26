@@ -3,10 +3,10 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
-	"log"
 )
 
 var processNo = 0  
@@ -55,6 +55,18 @@ func runProgram(cmd string, args []string) {
 }
 
 
+// helper function for debugging 
+
+func getLinuxProcessPath(pid int) (string , error ) {
+	procPath := fmt.Sprintf("/proc/%d/exe", pid) 
+	path , err := os.Readlink(procPath)
+
+	if err != nil {
+		return "" , err 
+	}
+	return path , nil 
+}
+
 func runJobs(command string , args []string) { 
 	// now i need to spawn a child process which run in the backgrond and we keep taking input 
 	// fmt.Println(cmd ,": needs to be exexuted ")
@@ -73,5 +85,10 @@ func runJobs(command string , args []string) {
 		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
 		pid := cmd.Process.Pid
 		fmt.Printf("[1] %d\n", pid)
+		// procPath , err := getLinuxProcessPath(pid)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
+		// fmt.Println(procPath)
 	}
 }
