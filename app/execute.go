@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"log"
 )
 
 var processNo = 0  
@@ -54,28 +55,23 @@ func runProgram(cmd string, args []string) {
 }
 
 
-func runJobs(cmd string , args []string) { 
+func runJobs(command string , args []string) { 
 	// now i need to spawn a child process which run in the backgrond and we keep taking input 
 	// fmt.Println(cmd ,": needs to be exexuted ")
 	// fmt.Println("args are :" , strings.Join(args," "))
 
 	// first we need to check if a valid command or not 
-	_ , err := exec.LookPath(cmd)
+	_ , err := exec.LookPath(command)
 	if err != nil {
-		fmt.Println(cmd + ": not found")
+		fmt.Println(command + ": not found")
 	}else {
-		output := exec.Command(cmd, args[0:]...)
-		if err := output.Start() ; err != nil {
-			fmt.Println("failed to start the process..")
+		cmd := exec.Command(command, args[0:]...)
+		err = cmd.Start()
+		if err != nil { 
+			log.Fatal(err)
 		}
-		processNo += 1
 		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
-		pid := output.Process.Pid
-		fmt.Printf("[%d] %v\n", processNo, pid)
-		if err := output.Wait(); err != nil {
-			processNo -= 1 
+		pid := cmd.Process.Pid
+		fmt.Printf("[1] %d\n", pid)
 	}
-	}
-
-
 }
