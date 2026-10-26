@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	// "log"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -78,17 +78,17 @@ func runJobs(command string , args []string) {
 		fmt.Println(command + ": not found")
 	}else {
 		cmd := exec.Command(command, args[0:]...)
-		cmd.Start()
-		// if err != nil { 
-		// 	log.Fatal(err)
-		// }
+		err := cmd.Start()
+		if err != nil { 
+			log.Fatal(err)
+		}
 		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
 		pid := cmd.Process.Pid
-		fmt.Printf("[1] %d\n", pid)
-		// procPath , err := getLinuxProcessPath(pid + 1 )
-		// if err != nil {
-		// 	fmt.Println(err)
-		// }
-		// fmt.Println(procPath)
+		fmt.Printf("[1] %v\n", pid)
+		procPath1 , err1 := getLinuxProcessPath(pid)
+		if err1 != nil {
+			fmt.Println(err1)
+		}
+		fmt.Println(procPath1)
 	}
 }	
