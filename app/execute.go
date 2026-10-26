@@ -93,7 +93,7 @@ func runJobs(command string , args []string) {
 			fmt.Println(procPath1)
 			return 
 		}
-		fmt.Println(procPath1)
-		fmt.Println(fmt.Sprintf("/proc/%d/exe", pid))
+	// 	fmt.Println(procPath1)
+	// 	fmt.Println(fmt.Sprintf("/proc/%d/exe", pid))
 	}
 }	
