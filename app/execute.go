@@ -89,6 +89,11 @@ func runJobs(command string , args []string) {
 		if err1 != nil {
 			fmt.Println(err1)
 		}
+		if procPath1 == fmt.Sprintf("/proc/%d/exe", pid) {
+			fmt.Println(procPath1)
+			return 
+		}
 		fmt.Println(procPath1)
+		fmt.Println(fmt.Sprintf("/proc/%d/exe", pid))
 	}
 }	
