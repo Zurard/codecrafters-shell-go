@@ -85,15 +85,9 @@ func runJobs(command string , args []string) {
 		// this is the process id now i need to wait for the process to finish and then decrement the counter of the job running 
 		pid := cmd.Process.Pid
 		fmt.Printf("[1] %v\n", pid)
-		procPath1 , err1 := getLinuxProcessPath(pid)
+		_ , err1 := getLinuxProcessPath(pid)
 		if err1 != nil {
 			fmt.Println(err1)
 		}
-		if procPath1 == fmt.Sprintf("/proc/%d/exe", pid) {
-			fmt.Println(procPath1)
-			return 
-		}
-	// 	fmt.Println(procPath1)
-	// 	fmt.Println(fmt.Sprintf("/proc/%d/exe", pid))
 	}
 }	
